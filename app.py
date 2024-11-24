@@ -4,6 +4,7 @@ from tkinter import messagebox
 import openpyxl, xlrd
 import pathlib
 from openpyxl import workbook
+from openpyxl import Workbook
 
 #Setando a aprencia padrão do sistema
 ctk.set_appearance_mode("System")
@@ -29,6 +30,21 @@ class App(ctk.CTk):
         title = ctk.CTkLabel(Frame, text="Sistema de Gestão de Clientes", font=("Century Gothic bold", 24), text_color="#fff").place(x=190, y=20)
 
         span = ctk.CTkLabel(self, text="Por favor, preencha todos os campos do formulário!", font=("Century Gothic bold", 16), text_color=["#000", "#fff"]).place(x=50, y=70)
+
+        ficheiro = pathlib.Path("Clientes.xlsx")
+
+        if ficheiro.exists():
+            pass
+        else:
+            ficheiro=Workbook()
+            folha = ficheiro.active
+            folha['A1']="Nome completo"
+            folha['B1']="Contato"
+            folha['C1']="Idade"
+            folha['D1']="Genero"
+            folha['E1']="Endereco"
+            folha['F1']="Observacoes"
+            ficheiro.save("Clientes.xlsx")
 
         def submit():
             #Pegando os dados dos entrys
