@@ -31,15 +31,45 @@ class App(ctk.CTk):
         span = ctk.CTkLabel(self, text="Por favor, preencha todos os campos do formulário!", font=("Century Gothic bold", 16), text_color=["#000", "#fff"]).place(x=50, y=70)
 
         def submit():
-            pass
+            #Pegando os dados dos entrys
+            name = name_value.get()
+            contact = contact_value.get()
+            age = age_value.get()
+            address = address_value.get()
+            gender = gender_combobox.get()
+            obs = obs_entry.get(0.0, END)
+
+            ficheiro = openpyxl.load_workbook('Clientes.xlsx')
+            folha = ficheiro.active
+            folha.cell(column=1, row=folha.max_row+1, value=name)
+            folha.cell(column=2, row=folha.max_row, value=contact)
+            folha.cell(column=3, row=folha.max_row, value=age)
+            folha.cell(column=4, row=folha.max_row, value=gender)
+            folha.cell(column=5, row=folha.max_row, value=address)
+            folha.cell(column=6, row=folha.max_row, value=obs)
+
+            ficheiro.save(r"Clientes.xlsx")
+            messagebox.showinfo("Sistema", "Dados inseridos com sucesso!")
+
         def clear():
-            pass
+            name_value.set("")
+            contact_value.set("")
+            age_value.set("")
+            address_value.set("")
+            obs_entry.delete(0.0, END)
+
+
+        #Texts variables
+        name_value = StringVar()
+        contact_value = StringVar()
+        age_value = StringVar()
+        address_value = StringVar()
 
         #Entrys
-        name_entry = ctk.CTkEntry(self, width=350, font=("Century Gothic bold", 16), fg_color="transparent")
-        contact_entry = ctk.CTkEntry(self, width=200, font=("Century Gothic bold", 16), fg_color="transparent")
-        age_enty = ctk.CTkEntry(self, width=150, font=("Century Gothic bold", 16), fg_color="transparent")
-        address_enty = ctk.CTkEntry(self, width=200, font=("Century Gothic bold", 16), fg_color="transparent")
+        name_entry = ctk.CTkEntry(self, width=350, textvariable=name_value, font=("Century Gothic bold", 16), fg_color="transparent")
+        contact_entry = ctk.CTkEntry(self, width=200, textvariable=contact_value, font=("Century Gothic bold", 16), fg_color="transparent")
+        age_enty = ctk.CTkEntry(self, width=150, textvariable=age_value, font=("Century Gothic bold", 16), fg_color="transparent")
+        address_enty = ctk.CTkEntry(self, width=200, textvariable=address_value, font=("Century Gothic bold", 16), fg_color="transparent")
 
         #Combobox
         gender_combobox = ctk.CTkComboBox(self, values=["Masculino", "feminino"], font=("Century Gothic bold", 14), width=150)
